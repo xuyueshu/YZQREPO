@@ -1,0 +1,7 @@
+#!/bin/bash
+#test git
+#by authors youzhiqiang 2019
+num1=100
+num2=200
+echo "$num1"
+echo "$num2"
