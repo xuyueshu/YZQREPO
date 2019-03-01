@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.yzq.springboot.mapper.ExamTypeCourseMapper">
+<!--教师查询考试类型-->
+<select id="getExamAndTypeAndCourse" resultMap="teacher_exam_type_course">
+SELECT
+DISTINCT
+	examtype.`name` examtypeName,
+	examtype.id examtypeId,
+	exam.id examId,
+	exam.`name` examName,
+	course.id couseId,
+	course.`name` couseName
+FROM
+	teacher t
+	JOIN teacher_class t_cl ON t.id = t_cl.teacherId
+	JOIN clazz ON t_cl.classId = clazz.id
+	JOIN grade ON grade.id = clazz.gradeid
+	JOIN teacher_course t_co ON t.id = t_co.teacherId
+	JOIN course ON t_co.courseId = course.id
+	JOIN exam ON exam.gradeid = grade.id 
+	AND exam.courseid = course.id
+	JOIN examtype ON exam.type = examtype.id 
+WHERE
+	t.id =#{teacherId}
+
+</select>
+<resultMap type="com.yzq.springboot.bean.ExamAndTypeAndCourse" id="teacher_exam_type_course">
+<result property="examtypeId" column="examtypeId"/>
+<result property="examtypeName" column="examtypeName"/>
+<result property="examId" column="examId"/>
+<result property="examName" column="examName"/>
+<result property="couseId" column="couseId"/>
+<result property="couseName" column="couseName"/>
+</resultMap>
+
+
+<!--学生获取考试类型  -->
+<select id="getExamtypeByStudentId" resultMap="student_exam_type_course">
+SELECT
+DISTINCT
+	examtype.id examtypeId,
+	examtype.`name` examtypeName
+FROM
+	student
+	JOIN exam ON student.gradeid = exam.gradeid
+	JOIN examtype ON examtype.id = exam.type 
+WHERE
+	student.id =#{studentId}
+
+</select>
+<resultMap type="com.yzq.springboot.bean.ExamAndTypeAndCourse" id="student_exam_type_course">
+<result property="examtypeId" column="examtypeId"/>
+<result property="examtypeName" column="examtypeName"/>
+</resultMap>
+</mapper>

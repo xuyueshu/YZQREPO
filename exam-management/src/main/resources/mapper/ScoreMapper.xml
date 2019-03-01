@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.yzq.springboot.mapper.ScoreMapper">
+<insert 
+id="addScore"
+ parameterType="com.yzq.springboot.bean.Escore"
+ useGeneratedKeys="true"
+ keyProperty="id"
+ >
+INSERT INTO escore(
+				 examid,
+				 clazzid,
+				 studentid,
+				 gradeid,
+				 courseid,
+				 score
+	 )VALUES(
+	        #{examId},
+	        #{clazzId},
+	        #{studentId},
+	        #{gradeId},
+	        #{courseId},
+	        #{score}
+	        )
+
+</insert>
+<select id="getScoreByStudentIdAndExamId" resultType="java.lang.Integer">
+SELECT
+	score 
+FROM
+	escore 
+WHERE
+	studentid =#{studentId}
+	AND examid =#{examId}
+</select>
+
+<!-- 查询指定学生，指定考试类型的科目，成绩列表 --> 
+<select id="getCourseVSscoreListBystudentIdExamtypeId" resultMap="courseVSscore">
+	SELECT
+    c.id courseId,
+	c.`name`courseName,
+	e.score 
+FROM
+	student t
+	JOIN escore e ON t.id= e.studentid
+	JOIN course c ON e.courseid = c.id
+	JOIN exam ON exam.id=e.examid
+  JOIN examtype et ON et.id=exam.type	
+WHERE
+	t.id =#{studentId} AND et.id=#{examtypeId}
+</select>
+<resultMap type="com.yzq.springboot.bean.CourseVSscore" id="courseVSscore">
+	<result property="courseId" column="courseId"/>
+	<result property="courseName" column="courseName"/>
+	<result property="score" column="score"/>
+</resultMap>
+</mapper>

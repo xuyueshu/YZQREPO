@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.yzq.springboot.mapper.ManuMapper">
+<select id="getParentManu" resultType="com.yzq.springboot.bean.Manu">
+SELECT
+	m.* 
+FROM
+	`user` u
+	JOIN role r ON u.roleId = r.id
+	JOIN role_manu r_m ON r.id = r_m.role_id
+	JOIN manu m ON r_m.manu_id = m.id 
+WHERE
+	u.id =#{userId}
+
+</select>
+
+<select id="getChildrenManueByPid" resultType="com.yzq.springboot.bean.Manu">
+SELECT
+	* 
+FROM
+	`manu`
+WHERE
+     parentId=#{parentId}
+
+</select>
+
+</mapper>

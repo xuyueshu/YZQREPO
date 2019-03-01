@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.yzq.springboot.mapper.ClazzMapper">
+<select id="getClassListByTeacherId" resultType="com.yzq.springboot.bean.Clazz">
+SELECT 
+clazz.id,
+clazz.`name` 
+FROM
+	teacher t
+	JOIN teacher_class t_cl ON t.id =t_cl.teacherId
+	JOIN clazz ON t_cl.classId = clazz.id
+	WHERE t.id=#{teacherId}
+
+</select>
+<select id="getClazzByleaderTeacherId" resultType="com.yzq.springboot.bean.Clazz">
+SELECT
+	clazz.id,
+	clazz.`name`,
+	clazz.gradeid gradeId
+FROM
+	teacher t
+	JOIN clazz ON t.id = clazz.leaderTeacherId 
+WHERE
+	t.id =#{teacherId}
+	
+</select>
+<!--获取学生对应的班级  -->
+<select id="getClazzByStudentId"  resultType="com.yzq.springboot.bean.Clazz">
+SELECT
+	clazz.id,
+	clazz.`name`,
+	clazz.gradeid	 
+FROM
+	student
+	JOIN clazz ON student.clazzid = clazz.id 
+WHERE
+	student.id =#{studentId}
+</select>
+</mapper>

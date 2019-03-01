@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.yzq.springboot.mapper.AchieveScoreMapper">
+<select id="queryScoreByUid" resultMap="AchieveScore">
+SELECT
+	c.`name`,
+	e.score 
+FROM
+	student t
+	JOIN escore e ON t.id= e.studentid
+	JOIN course c ON e.courseid = c.id
+	JOIN exam ON exam.id=e.examid
+    JOIN examtype et ON et.id=exam.type	
+WHERE
+	t.id =#{studentId} AND et.id=#{examtypeId}
+LIMIT #{pageStart},#{pageSize}
+
+</select>
+<resultMap type="com.yzq.springboot.bean.AchieveScore" id="AchieveScore">
+	<result property="courseName" column="name"/>
+	<result property="score" column="score"/>
+</resultMap>
+
+<select id="countScore" resultType="java.lang.Integer">
+SELECT
+	COUNT( * ) 
+FROM
+	student t
+	JOIN escore e ON t.id= e.studentid
+	JOIN course c ON e.courseid = c.id
+	JOIN exam ON exam.id=e.examid
+    JOIN examtype et ON et.id=exam.type	
+WHERE
+	t.id =#{studentId} AND et.id=#{examtypeId}
+	
+</select>	
+</mapper>

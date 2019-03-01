@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.yzq.springboot.mapper.RoleMapper">
+<select id="getRoleByUid" resultType="com.yzq.springboot.bean.Role">
+SELECT
+	r.id,
+	r.`name` 
+FROM
+	`user` u
+	JOIN role r ON u.roleId = r.id 
+WHERE
+	u.id =#{uid}
+
+</select>
+</mapper>
