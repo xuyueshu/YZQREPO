@@ -1,0 +1,73 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title> 欢迎注册</title>
+	</head>
+	<body>
+		<center>
+			<h1>欢迎注册</h1>
+			<!--form表单是用来将页面用户输入的内容提交给
+			服务端使用的标签
+			需要注意,只有在form表单的<input>域内容才会被
+			提交到服务端。
+			
+			form有两个重要的属性：
+			method：指定提交表单的形式，默认为GET。可选（GET，POST）
+			action：表单提交的路径
+			
+			注意：表单中所有的<input>标签必须要指定name属性，否则
+			该输入域的内容在提交时被忽略。(地址栏？后面表示要传入的参数)
+			
+			提交表单有专门的提交按钮，type类型为submit。
+			http://localhost:8088/myweb/reg?username=zhangsan&password=123456&nickname=asan&age=22
+			  -->
+			<form action="reg" method="get">
+			<table border="1">
+				<tr>
+					<td>用户名</td>
+					<td><input name="username" type="text" size="32"></td>
+				</tr>
+				<tr>
+					<td>密码</td>
+					<td><input name="password" type="password" size="32"></td>
+				</tr>
+				<tr>
+					<td>昵称</td>
+					<td><input name="nickname" type="text" size="32"></td>
+				</tr>
+				<tr>
+					<td>年龄</td>
+					<td><input name="age" type="text" size="32"></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+					<input type="submit"value="注册">
+					</td>
+				</tr>
+			</table>
+				</form>
+		</center>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
