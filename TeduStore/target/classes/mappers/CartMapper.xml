@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.store.mapper.CartMapper">
+
+<insert id="insert" 
+ parameterType="cn.tedu.store.entity.Cart"
+ useGeneratedKeys="true" 
+ keyProperty="id"
+ >
+ INSERT INTO t_cart(
+ 						uid,goods_id,
+ 						goods_image,
+ 						goods_title,
+ 						goods_price,
+ 						goods_num,
+ 						created_user,
+ 						created_time,
+ 						modified_user,
+ 						modified_time
+ )VALUES(
+ 					#{uid},
+ 					#{goodsId},
+ 					#{goodsImage},
+ 					#{goodsTitle},
+ 					#{goodsPrice},
+ 					#{goodsNum},
+ 					#{createdUser},
+ 					#{createdTime},
+ 					#{modifiedUser},
+ 					#{modifiedTime}
+ )
+</insert>
+
+<select id="getCountByUidAndGoodsId" resultType="java.lang.Integer">
+	 SELECT 
+	      count(id) 
+	 FROM
+	   	 	t_cart
+	 WHERE
+	    	uid=#{uid} and goods_id=#{goodsId}
+</select>
+
+<update id="changeGoodsNum">
+UPDATE
+			t_cart
+SET 
+			goods_num=goods_num+#{num}
+WHERE 
+			uid=#{uid} and goods_id=#{goodsId}
+</update>
+
+<!-- 
+/**
+	 * 查询当前用户购物车详情
+	 * @param uid 用户id
+	 * @param offset 
+	 * @param count
+	 * @return
+	 */
+ -->
+<select id="getList" resultType="cn.tedu.store.entity.Cart">
+	 SELECT 
+	      	  id,
+	      	  uid,
+	      	  goods_id goodsId,
+	      	  goods_image goodsImage,
+ 						goods_title goodsTitle,
+ 						goods_price goodsPrice,
+ 						goods_num goodsNum
+	 FROM
+	   	 	t_cart
+	 WHERE
+	    	uid=#{uid} 
+	 ORDER BY 
+				id
+	 DESC
+	 LIMIT
+	 			#{offset},#{count}
+</select>
+
+<select id="getListCountByUid" resultType="java.lang.Integer">
+	 SELECT 
+	      	 count(id)
+	 FROM
+	   	 	t_cart
+	 WHERE
+	    	uid=#{uid} 
+</select>
+
+
+<!--通过勾选的购物车列表的id查询购物车列表  -->
+<select id="getListByIds" resultType="cn.tedu.store.entity.Cart">
+	SELECT 
+	      	  id,
+	      	  uid,
+	      	  goods_id goodsId,
+	      	  goods_image goodsImage,
+ 						goods_title goodsTitle,
+ 						goods_price goodsPrice,
+ 						goods_num goodsNum
+	 FROM
+	   	 	t_cart
+	 WHERE
+	    	uid=#{uid} and id in (
+	    	<foreach collection="ids" item="id" separator=",">
+	    	#{id}
+	    	</foreach> 
+	    	)
+	 ORDER BY 
+				id
+	 DESC
+</select>
+
+</mapper>

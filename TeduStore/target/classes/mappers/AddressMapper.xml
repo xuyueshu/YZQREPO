@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.store.mapper.AddressMapper">
+	<insert id="insert" parameterType="cn.tedu.store.entity.Address" useGeneratedKeys="true" keyProperty="id">
+INSERT INTO t_address 
+( uid, recv_name, recv_province, recv_city, recv_area, recv_district, recv_address, recv_phone, recv_tel, recv_zip, recv_tag, is_default, created_user, created_time, modified_user, modified_time )
+
+ VALUES ( #{uid}, #{recvName}, #{recvProvince}, #{recvCity}, #{recvArea}, #{recvDistrict}, #{recvAddress}, #{recvPhone}, #{recvTel}, #{recvZip}, #{recvTag}, #{isDefault}, #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime} )
+</insert>
+	 
+	 <!--  -->
+	 <select id="getCountByUid" resultType="java.lang.Integer">
+	 select count(uid) from t_address where uid=#{uid}
+	 </select>
+ 
+ <!--获取当前用户的收货地址列表  -->
+  <!--  -->
+	 <select id="getList" resultType="cn.tedu.store.entity.Address">
+	 select 
+	 id,uid, recv_name recvName, recv_province recvProvince, recv_city recvCity, recv_area recvArea, recv_district recvDistrict, recv_address recvAddress, recv_phone recvPhone,recv_tel recvTel,recv_zip recvZip, recv_tag recvTag, is_default isDefault, created_user createdUser, created_time createdTime, modified_user modifiedUser, modified_time modifiedTime 
+	 from t_address where uid=#{uid} order by is_default desc,id desc;
+	 </select>
+	 <!--将当前用户全部的收货地址设为非默认  -->
+	 <update id="setNonDefault">
+	 update t_address 
+	 set
+	 is_default=0 where uid=#{uid}
+	 </update>
+	 <!--对指定的地址设为默认  -->
+	 <update id="SetDefault">
+	 update t_address 
+	 set
+	 is_default=1 where uid=#{uid} and id=#{id} 
+	 </update>
+	 <!-- 通过id查询收货地址信息 -->
+	 <select id="getAddressById" resultType="cn.tedu.store.entity.Address">
+	 select id,uid, recv_name recvName, recv_province recvProvince, recv_city recvCity, recv_area recvArea, recv_district recvDistrict, recv_address recvAddress, recv_phone recvPhone,recv_tel recvTel,recv_zip recvZip, recv_tag recvTag, is_default isDefault, created_user createdUser, created_time createdTime, modified_user modifiedUser, modified_time modifiedTime 
+	 from 
+	 t_address where id=#{id}
+	 </select>
+	 <!-- 删除用户收货地址 -->
+	 <delete id="deleteById">
+	 delete from t_address
+	 where
+	 id=#{id}
+	 </delete>
+	 
+	 
+	 <!--  修改地址信息-->
+	 <update id="update">
+	 update t_address
+	 set
+	 <if test="recvName!=null">
+	 recv_name=#{recvName},
+	 </if>
+	 <if test="recvProvince!=null">
+	 recv_province=#{recvProvince},
+	 </if>
+	 <if test="recvCity!=null">
+	 recv_city=#{recvCity},
+	 </if>
+	 <if test="recvArea!=null">
+	 recv_area=#{recvArea},
+	 </if>
+	 <if test="recvDistrict!=null">
+	 recv_district=#{recvDistrict},
+	 </if>
+	 <if test="recvAddress!=null">
+	 recv_address=#{recvAddress},
+	 </if>
+	 <if test="recvPhone!=null">
+	 recv_phone=#{recvPhone},
+	 </if>
+	 <if test="recvTel!=null">
+	 recv_tel=#{recvTel},
+	 </if>
+	 <if test="recvZip!=null">
+	 recv_zip=#{recvZip},
+	 </if>
+	 <if test="recvTag!=null">
+	 recv_tag=#{recvTag},
+	 </if>
+	 
+	 modified_time=#{modifiedTime}
+	 WHERE uid=#{uid} and id=#{id}
+	 </update>
+</mapper>
