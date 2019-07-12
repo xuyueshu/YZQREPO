@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.store.mapper.DistrictMapper">
+	 
+	 
+	 <select id="getList" resultType="cn.tedu.store.entity.District">
+	 select id,parent,code,name from t_dict_district where parent=#{parent}
+	 </select>
+	 
+	 <select id="getInfo" resultType="cn.tedu.store.entity.District">
+	 select id,parent,code,name from t_dict_district where code=#{code}
+	 </select>
+</mapper>

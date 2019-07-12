@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form id="upload-form" action="upload.do" method="post" enctype="multipart/form-data"><!-- enctype加密类型 -->
+	<div>请选择你要上传的文件：<input type="file" name="file" multiple="multiple"/></div><!--multiple表示一次可以选中多个文件  -->
+	<div><input type="submit" value="提交"/>
+	<input id="ajax_upload" type="button" value="AJAX上传"/>
+	</div>
+	</form>
+	<script type="text/javascript" src="jquery-1.4.2.js"></script>
+<script>
+  $("#ajax_upload").click(function(){
+	  console.log("ajax_upload");
+	  var data=new FormData($("#upload-form")[0]);/* 通过jquary选择器选出的一定是数组 *//* 固定配置 */
+	  	$.ajax({
+	  		"url":"upload.do",
+	  		"data":data,
+	  		"dataType":"json",
+	  		"type":"post",
+	  		"contentType":false,/* 固定配置 */
+	  		"processData":false,/* 固定配置 */
+	  		"success":function(json){
+	  			console.log("success");
+	  			if(avatar!=null){
+	  				$("#icon").attr();
+	  			}
+	  		}
+	  	});
+
+  })
+</script>
+</body>
+</html>

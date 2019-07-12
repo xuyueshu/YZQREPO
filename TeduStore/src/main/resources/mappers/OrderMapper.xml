@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.store.mapper.OrderMapper">
+<!--  插入订单数据  -->
+<!--  Integer insertOrder(Order order)  -->
+<insert id="insertOrder" 
+parameterType="cn.tedu.store.entity.Order" 
+useGeneratedKeys="true" 
+keyProperty="id">
+		INSERT INTO t_order ( 
+					uid, 
+					recv_name,
+					recv_phone,
+  					recv_address,
+   					total_price, 
+   					status,
+    				create_time,
+     				pay_time, 
+     				created_user,
+      				created_time, 
+      				modified_user, 
+      				modified_time 
+      				
+       )VALUES ( 
+       				#{uid},
+       				#{recvName},
+       				#{recvPhone},
+       				#{recvAddress},
+       				#{totalPrice},
+       				#{status},
+       				#{createTime},
+       				#{payTime},
+       				#{createdUser},
+       				#{createdTime},
+       				#{modifiedUser},
+       				#{modifiedTime}
+       		   )
+</insert>
+<!--  插入订单商品数据  -->
+<!--  Integer insertOrderItem(OrderItem orderItem)  -->
+<insert id="insertOrderItem" parameterType="cn.tedu.store.entity.OrderItem" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_order_item ( 
+								order_id,
+		 						goods_id,
+		 						goods_image,
+		   						goods_title,
+							    goods_price,
+							    goods_num,
+							    created_user,
+							    created_time,
+							    modified_user,
+							    modified_time 
+		         ) VALUES ( 
+						         #{orderId},
+						         #{goodsId}, 
+						         #{goodsImage},
+						         #{goodsTitle}, 
+						         #{goodsPrice},
+						         #{goodsNum}, 
+						         #{createdUser},
+						         #{createdTime},
+						         #{modifiedUser},
+						         #{modifiedTime}
+		                )
+</insert>
+
+<resultMap type="cn.tedu.store.entity.OrderVO" id="ordervo">
+<id column="id" property="id"/>
+<result column="recv_name" property="recvName"/>
+<result column="recv_phone" property="recvPhone"/>
+<result column="recv_address" property="recvAddress"/>
+<result column="total_price" property="totalPrice"/>
+<collection property="orderItems" ofType="cn.tedu.store.entity.OrderItem"/>
+</resultMap>
+
+<select id="getOrderByUid" resultMap="ordervo">
+	       SELECT 	
+	       			t1.id
+	       			t1.recv_name,
+					t1.recv_phone,
+  					t1.recv_address,
+   					t1.total_price,
+   					t2.goods_title,
+				    t2.goods_price,
+				   	t2.goods_num
+			FROM 
+					t_order t1
+				   
+		    JOIN 
+		            t_order_item t2
+		    ON 	
+		           t1.id=t2.order_id and t1.uid=#{uid}
+</select>
+
+</mapper>

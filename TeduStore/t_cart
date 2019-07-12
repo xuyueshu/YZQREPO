@@ -1,0 +1,16 @@
+use tedu_store;
+create table t_cart
+(id int auto_increment,
+uid int,
+goods_id bigInt(20),
+goods_image varchar(500),
+goods_title varchar(100),
+goods_price bigInt(20),
+goods_num int,
+created_user varchar(16),
+created_time dateTime,
+modified_user varchar(16),
+modified_time dateTime,
+primary key(id)) default charset=utf8
+
+desc t_cart;

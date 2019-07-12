@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.store.mapper.GoodsMapper">
+
+<select id="getListByCategory" resultType="cn.tedu.store.entity.Goods">
+SELECT
+    id,title,image,price
+FROM 
+    t_goods
+WHERE 
+    category_id=#{categoryId} and status=1
+ORDER BY
+    priority DESC
+LIMIT
+    #{offset},#{count}
+</select>
+
+<select id="getGoodsById" resultType="cn.tedu.store.entity.Goods">
+SELECT
+		 category_id categoryId,title,sell_point sellPoint,item_type itemType,price,num,barcode,image,priority
+FROM 
+		t_goods
+WHERE 
+		id=#{id} and status=1
+		
+		
+</select>
+</mapper>
