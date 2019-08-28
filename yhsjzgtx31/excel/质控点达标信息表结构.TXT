@@ -1,0 +1,69 @@
+
+预警脚本每跑一次，根据校历时间如果是同一学年进行更新（先删除这个学年在插入即可），如果到第二个学年进行插入
+
+质控点达标信息
+
+
+专业质控点达标信息  im_major_target_standard_record
+		
+		 id bigint 主键自增
+		 semester_year  			学年 格式： yyyy-yyyy
+		 major_no  varchar(64)   专业编号
+		 major_name  varchar(255)   专业名称
+		 quality_no 质控点编号 
+		 quality_name 质控点名称
+		 is_target    是否达到目标值  YES 是  NO 否
+		 is_standard  是否达到标准值  YES 是  NO 否
+		 create_time datetime 创建时间
+
+
+课程质控点达标信息   im_course_target_standard_record
+
+			id bigint 主键自增
+			semester_year  			学年 格式： yyyy-yyyy
+			course_code  varchar(64)   课程编号
+			course_name  varchar(255)   课程名称
+			quality_no 质控点编号
+		 	quality_name 质控点名称
+		 	is_target    是否达到目标值  YES 是  NO 否
+		 	is_standard  是否达到标准值  YES 是  NO 否		
+			create_time datetime 创建时间
+
+			
+教师质控点达标信息   im_teacher_target_standard_record	
+			
+			id bigint 主键自增
+			semester_year  			学年 格式： yyyy-yyyy
+			teacher_no        	教师编号
+			teacher_name      	教师姓名
+			quality_no 质控点编号
+		 	quality_name 质控点名称
+		 	is_target    是否达到目标值  YES 是  NO 否
+		 	is_standard  是否达到标准值  YES 是  NO 否		
+			create_time datetime 创建时间
+
+
+学生质控点达标信息   im_student_target_standard_record	
+
+			id bigint 主键自增
+			semester_year  			学年 格式： yyyy-yyyy
+			student_no  varchar(64)   学生编号
+			student_name  varchar(255)  学生姓名
+			quality_no 质控点编号
+		 	quality_name 质控点名称
+		 	is_target    是否达到目标值  YES 是  NO 否
+		 	is_standard  是否达到标准值  YES 是  NO 否		
+			create_time datetime 创建时间
+		
+CREATE TABLE `im_college_target_standard_record` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键自增',
+  `semester_year` varchar(64) DEFAULT NULL COMMENT '学年 格式： yyyy-yyyy',
+  `quality_no` varchar(64) DEFAULT NULL COMMENT '质控点编号',
+  `quality_name` varchar(255) DEFAULT NULL COMMENT '质控点名称',
+  `is_target` varchar(32) DEFAULT NULL COMMENT '是否达到目标值  YES 是  NO 否',
+  `is_standard` varchar(32) DEFAULT NULL COMMENT '是否达到标准值  YES 是  NO 否',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='学院质控点达标信息';
+			
+

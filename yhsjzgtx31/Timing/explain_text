@@ -1,0 +1,102 @@
+============注释=================================
+1.脚本推荐整体执行顺序：
+        质控点数据项基础信息表 im_quality/im_quality_data_base_info.sh
+               五横数据
+               质控点数据项 (college,course,major,student,teacher)
+               质量报告 QualityReport/···
+               自诊报告 SelfDiagnosisReport/···
+               考核点数据项 Checkpoint/···
+                       [
+                        department_faculty_rwwcl.sh
+                        department_faculty_rwyjcll.sh
+                        department_faculty_rwyjzb.sh
+                        department_faculty_rwyql.sh
+                        number_of_teaching_accidents.sh
+                        planning_completion_rate.sh
+                        quality_control_point_early_warning.sh
+                        student_attendance_rate.sh
+                        ]
+==================================================
+2.定时脚本：
+        脚本所在位置：Timing/···
+        脚本文件夹                      统一运行定时脚本
+        college                          run_college.sh
+        course                           run_course.sh
+        major                            run_major.sh
+        student                          run_student.sh
+        teacher                          run_teacher.sh
+        质控点全部定时脚本可以放在一起跑，根据需要：quality_control_point.sh
+        Checkpoint/···                run_Checkpoint.sh
+        QualityReport/···             run_SelfDiagnosisReport.sh
+        run_QualityReport.sh
+==================================================
+3.质控点脚本执行时方法运行顺序：
+        (1)单个脚本执行时：
+                第一次执行时：
+                create_table
+                import_table
+                export_table
+                第二次+以后
+                import_table_new
+                export_table_new
+
+        (2)使用定时脚本执行时，注意doconmand（）方法里面的
+                create_table
+                import_table
+                export_table
+
+                第二次+以后，换成
+                import_table_new
+                export_table_new
+==================================================
+3.以
+find_mysql_data "
+         INSERT INTO ${TARGET_TABLE}····
+开头的都是从mysql库里面直接抽取的，并没有抽到hive库中，推荐最后跑这些方法。
+
+4.五横1.0基础数据抽取脚本目录 SXNYZY/five_horizontal_standard_1.0/···：
+      base_student_info.sh
+      base_major_info.sh
+      base_course_info.sh
+      base_teacher_info.sh
+      base_teacher_department_info.sh
+
+5.五横定时脚本
+##定时任务结构说明（日志路径：/root/etl/SXNYZY/Timing/logs/）
+每天一次统一执行脚本（raw）
+每月一次统一执行脚本（raw）
+每学期一次统一执行脚本（raw）
+每学年一次统一执行脚本（raw）
+党员/学生每月一次统一执行脚本
+基础/学院/专业/学生/教师/课程/每学期一次统一执行脚本(model)
+基础/学院/专业/学生/教师/科研/课程/每学期一次统一执行脚本(app)
+学院/专业/学生/教师/科研/课程/每学年一次统一执行脚本(model)
+学院/专业/学生/教师每学年一次统一执行脚本(app)
+质控点学院
+质控点课程
+质控点专业
+质控点学生
+质控点教师
+质量报告 数据项 基础表5个层面
+自诊报告 数据项 基础表5个层面
+绩效报告统一执行脚本
+-------------------------
+
+38 2 * * * cd /root/etl/SXNYZY/Timing/; sh run_raw_everyday.sh
+38 5 1 * * cd /root/etl/SXNYZY/Timing/; sh run_raw_month.sh
+38 5 14 7 * cd /root/etl/SXNYZY/Timing/; sh run_raw_semester.sh
+38 14 15 7 * cd /root/etl/SXNYZY/Timing/; sh run_raw_semester_year.sh
+38 5 * * * cd /root/etl/SXNYZY/Timing/; sh run_everyday.sh &
+38 16 1 * * cd /root/etl/SXNYZY/Timing/; sh run_month.sh &
+38 16 14 7 * cd /root/etl/SXNYZY/Timing/; sh run_model_semester.sh &
+38 16 15 7 * cd /root/etl/SXNYZY/Timing/; sh run_app_semseter.sh &
+38 16 1 2 * cd /root/etl/SXNYZY/Timing/; sh run_model_semester_year.sh &
+38 16 2 2 * cd /root/etl/SXNYZY/Timing/; sh run_app_semester_year.sh &
+38 16 4 2 * cd /root/etl/SXNYZY/Timing/; sh run_college.sh &
+38 16 6 2 * cd /root/etl/SXNYZY/Timing/; sh run_course.sh &
+38 16 8 2 * cd /root/etl/SXNYZY/Timing/; sh run_major.sh &
+38 16 10 2 * cd /root/etl/SXNYZY/Timing/; sh run_student.sh &
+38 16 12 2 * cd /root/etl/SXNYZY/Timing/; sh run_teacher.sh &
+38 16 14 2 * cd /root/etl/SXNYZY/Timing/; sh  run_qualityreport.sh &
+38 16 16 2 * cd /root/etl/SXNYZY/Timing/; sh  run_selfdiagnosisreport.sh &
+38 16 29 7 * cd /root/etl/SXNYZY/Timing/; sh run_checkpoint.sh &

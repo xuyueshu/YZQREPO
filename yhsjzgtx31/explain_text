@@ -1,0 +1,46 @@
+============注释=================================
+1.脚本推荐整体执行顺序：
+        质控点数据项基础信息表 im_quality/im_quality_data_base_info.sh
+        五横结果数据
+        质控点数据项 (college,course,major,student,teacher)
+        考核点数据项 Checkpoint/···
+        预警脚本
+        质量报告 QualityReport/···
+        自诊报告 SelfDiagnosisReport/···
+==================================================
+2.定时脚本：
+        脚本所在位置：Timing/···
+        脚本文件夹                      统一运行脚本(是根据当前质控点是否开启来判断是否执行该脚本）
+        college                          run_college.sh
+        course                           run_course.sh
+        major                            run_major.sh
+        student                          run_student.sh
+        teacher                          run_teacher.sh
+        质控点全部定时脚本可以放在一起跑，根据需要：quality_control_point.sh
+        Checkpoint/···                run_Checkpoint.sh
+        QualityReport/···             run_SelfDiagnosisReport.sh
+        run_QualityReport.sh
+==================================================
+3.质控点脚本执行时方法运行顺序：
+        (1)单个脚本执行时：
+                第一次执行时：
+                create_table
+                import_table
+                export_table
+                第二次+以后
+                import_table_new
+                export_table_new
+
+        (2)使用定时脚本执行时，注意doconmand（）方法里面的
+                create_table
+                import_table
+                export_table
+
+                第二次+以后，换成
+                import_table_new
+                export_table_new
+==================================================
+3.以
+find_mysql_data "
+         INSERT INTO ${TARGET_TABLE}····
+开头的都是从mysql库里面直接抽取的，并没有抽到hive库中，推荐最后跑这些方法。

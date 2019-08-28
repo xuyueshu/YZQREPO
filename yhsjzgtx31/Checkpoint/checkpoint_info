@@ -1,0 +1,13 @@
+CREATE TABLE `ef_assess_point_data_value_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键自增',
+  `data_no` varchar(64) NOT NULL COMMENT '数据项编号',
+  `data_name` varchar(255) DEFAULT NULL COMMENT '数据项名称',
+  `first_index_type` varchar(64) DEFAULT NULL COMMENT '一级指标类型  GGZB 公共指标   YWZB 业务指标  CGYGX 成果与贡献  MYDPF 满意度评分 PFX 加分项  RFX 减分项',
+  `data_cycle` varchar(64) DEFAULT NULL COMMENT '数据统计周期  YEAR 年  MONTH 月  DAY 日  QUARTER 季度  SEMESTERYEAR 学年   SEMESTER 学期  OTHER 其他',
+  `data_type` varchar(64) DEFAULT NULL COMMENT '数据类型  NUMBER 数值类型  ENUM 枚举类型',
+  `data_time` varchar(255) DEFAULT NULL COMMENT '数据日期  年YYYY  月YYYYmm 日YYYYMMDD  季度YYYY-1，yyyy-2,yyyy-3,yyyy-4   学期 yyyy-yyyy  学期 yyyy-yyyy-1,yyyy-yyyy-2',
+  `data_value` varchar(255) DEFAULT NULL COMMENT '数据项值（数字保存数字，如果是数据字典枚举保存key）',
+  `is_new` varchar(64) DEFAULT NULL COMMENT '是否最新 是YES 否NO',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='考核点数据信息表';

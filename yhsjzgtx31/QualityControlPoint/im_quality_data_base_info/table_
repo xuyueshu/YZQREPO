@@ -1,0 +1,16 @@
+CREATE TABLE `im_quality_data_base_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `data_no` varchar(64) DEFAULT NULL COMMENT '数据项编号',
+  `data_name` varchar(255) DEFAULT NULL COMMENT '数据项名称',
+  `index_layer` varchar(64) DEFAULT NULL COMMENT '质控点所属指标层级   COLLEGE 学院  MAJOR 专业   COURSE 课程  TEACHER 教师  STUDENT 学生 ',
+  `data_type` varchar(64) DEFAULT NULL COMMENT '数据类型  NUMBER 数值类型  ENUM 枚举类型',
+  `data_cycle` varchar(64) DEFAULT NULL COMMENT '数据统计周期  YEAR 年  MONTH 月  DAY 日  QUARTER 季度  SEMESTERYEAR 学年   SEMESTER 学期  OTHER 其他',
+  `show_row` int(11) DEFAULT NULL COMMENT '展示数据行数',
+  `data_status` varchar(64) DEFAULT NULL COMMENT '数据项状态  OPEN 开启   CLOSE 禁用',
+  `script_status` varchar(64) DEFAULT NULL COMMENT '是否有脚本  YES 是   NO 否',
+  `data_desc` text COMMENT '数据描述',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `last_modify_time` datetime DEFAULT NULL COMMENT '最会修改时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `DATA_NO_UNIQUE` (`data_no`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=256 DEFAULT CHARSET=utf8 COMMENT='质控点数据项基础信息表';

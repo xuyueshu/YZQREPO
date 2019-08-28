@@ -1,0 +1,697 @@
+
+
+自诊报告
+
+
+教师自诊报告记录表 qu_teacher_diagnosis_report_record 添加报告记录
+
+1：教师诊断报告信息表  qu_teacher_diagnosis
+
+		id bigint 					主键自增
+		report_no	    			报告编号  格式：学年学期教师编号(关联表qu_teacher_diagnosis_report_record)
+		semester_year  			学年 格式： yyyy-yyyy
+		semester           	学期 1 第一学期 2 第二学期
+		teacher_no        	教师编号
+		teacher_name      	教师姓名
+		
+		item_key        		数据项标识                         
+		item_value      		数据值                         
+		create_time   			创建时间 datetime                         
+		                         
+		                         
+		                         
+		JG      	籍贯   
+		MZ           	民族 
+		XL      			学历  
+		SSBMMC 		所属部门名称 
+		ZC  职称 	
+		DKSL    			代课数量
+		KSXS    			课时学时
+		DKBJSL   				代课班级数量
+		DKXSZS   			代课学生总数
+		XSPJCJ   				学生平均成绩
+		KSTGL   				考试通过率(考试通过学生数/考试学生总数)		
+		FBLWSL       		发表论文数量
+		CBZZSL   		参编著作数量
+		ZLSL      		专利数量
+		SHFWSL   			社会服务数量
+		PXCS  			培训次数		
+		XLTS    			学历提升 有 无
+
+
+
+
+ 1.1 教师代课详情表 qu_teacher_diagnosis_course_report
+
+		id bigint 主键自增
+		report_no	     报告编号  格式：学年学期教师编号
+		course_code  varchar(64)   课程编号
+		course_name  varchar(255)   课程名称
+		class_no  varchar(64)   班级编号
+		class_name  varchar(255)   班级名称
+		student_num int 学生总数
+		avg_score float 平均分
+		pass_num int 考试通过人数
+		create_time datetime 创建时间
+		
+		
+		
+	1.2教师科研与服务 qu_teacher_diagnosis_report_research_service
+	
+		id bigint 主键自增
+		report_no	     报告编号  格式：学年学期教师编号
+		send_type     	发布类别
+		object_name  		项目名称
+		send_time    		发布时间  格式：yyyymmdd
+		send_note 	  备注
+		create_time datetime 创建时间
+		
+		
+	1.3教师参加培训情况   qu_teacher_diagnosis_report_train
+		
+		id bigint 主键自增
+		report_no	     报告编号  格式：学年学期教师编号
+		object_name  项目名称
+		start_time  开始时间   格式：yyyymmdd 
+		end_time  结束时间   格式：yyyymmdd 
+		prize_type   证书&荣誉
+		create_time datetime 创建时间
+		
+		
+	1.4教师任务完成情况  qu_teacher_diagnosis_report_task
+		
+		id bigint 主键自增
+		report_no	     报告编号  格式：学年学期教师编号
+		task_name     任务名称
+		task_type     任务类型
+		task_roler    角色   责任人、参与人
+		finish_info   完成情况
+		create_time   datetime 创建时间
+
+
+学生自诊报告记录表 qu_student_diagnosis_report_record 添加报告记录
+
+2：学生诊断报告信息表  qu_student_diagnosis_report	
+	
+		id bigint 主键自增
+		report_no	    报告编号  格式：学年学期学生编号(关联表 qu_student_diagnosis_report_record)
+		semester_year  varchar(64)  学年 格式： yyyy-yyyy
+		semester varchar(32) 学期 1 第一学期 2 第二学期
+		student_no  varchar(64)   学生编号
+		student_name  varchar(255)  学生姓名
+		item_key        		数据项标识                         
+		item_value      		数据值
+		create_time datetime 创建时间
+
+
+					JG  					籍贯 
+					MZ 						民族 
+					NJ  					年级  
+					SSXBBH				所属系部编号
+					SSXBMC				所属系部名称 
+					ZYBH							专业编号
+					ZYMC  						专业名称 
+					BJBH              班级编号
+					BJMC  						班级名称
+				   KCSL 						课程数量
+					PJF 						平均分 保留一位小数
+					KSBTGS						考试不通过数
+					BTGKCMC  				不通过课程名称  用、隔开
+					BJPM 	 					班级排名
+					ZYPM  					专业排名
+					JYTSSL  						借阅图书数量
+					ZYRS				专业人数
+					ZYJYTSMC				专业借阅图书名次
+					QXXSRS 			全校学生人数
+					QXJYTSMC			全校借阅图书名次
+					
+ 2.1学生自诊成绩信息  qu_student_diagnosis_report_score
+  
+	  id bigint 主键自增
+		report_no	    报告编号  格式：学年学期学生编号
+    course_name   课程名称
+    teacher_name  任课老师
+    course_score  float(3,1) 成绩  保留一位小数
+    major_avg     float(3,1) 专业平均分
+    mojor_sort    bigint 专业排名
+    create_time datetime 创建时间
+
+ 2.2学生获取证书奖项信息表 qu_student_diagnosis_report_award	
+		
+		id bigint 主键自增
+		report_no	    报告编号  格式：学年学期学生编号
+		award_type   varchar(64)   奖项类型 证书 CERTIFICATE 奖项 AWARD
+		award_name  varchar(255)   证书或奖项名称
+		award_level   varchar(64)   证书或奖项级别
+		award_date   获取证书或奖项时间  格式：yyyymmdd
+		create_time datetime 创建时间
+
+2.3学生自诊成绩排名信息  qu_student_diagnosis_report_award_sort
+
+						修改后： qu_student_diagnosis_report_score_sort
+		id bigint                   主键自增
+		report_no	                  报告编号  格式：学年学期学生编号
+		semester_year  varchar(64)  学年 格式： yyyy-yyyy
+		semester varchar(32)        学期 1 第一学期 2 第二学期
+		award_count   float(4,1)   总成绩
+		mojor_sort    bigint       专业排名
+		class_sort   varchar(64)   班级排名
+		create_time datetime       创建时间
+
+专业自诊报告记录表 qu_major_diagnosis_report_record 添加报告记录
+3：专业诊断报告信息表  qu_major_diagnosis_report	
+			
+		id bigint 主键自增
+		report_no	    报告编号  格式：学年学期专业编号（关联qu_major_diagnosis_report_record）
+		semester_year  varchar(64)  学年 格式： yyyy-yyyy
+		semester varchar(32) 学期 1 第一学期 2 第二学期
+		major_no  varchar(64)   专业编号
+		major_name  varchar(255)   专业名称
+		item_key        		数据项标识                         
+		item_value      		数据值	
+		create_time datetime 创建时间
+			
+			
+			SSXBMC    		所属系部名称 
+		  SFXDXTZZY         		是否现代学徒制专业 是  否	
+		  SZSJ         		设置时间  格式：yyyymmdd
+		  GZYBJSL 						该专业班级数量
+		  ZYDTRBH   专业带头人编号
+		  ZYDTRXM  	专业带头人姓名
+			XYZRJSRS 			现有专任教师人数
+			ZYXSRS 			专业学生人数
+			SSB   		生师比 
+			BSYJSXLJSRS  					博士研究生学历教师人数
+			SSXLJSRS 						硕士学历教师人数
+			BZYGJZCJSRS 						本专业高级职称教师人数
+			BZYSSSZJSRS						本专业双师素质教师人数
+			
+			
+			BZY 							本专业著作数量
+			DLFBLWSL 				独立发表论文数量
+			LWZZBHBXJSDLWSL 			论文作者包含本校教师的论文数量
+			HJXMSL 			获奖项目数量
+			GJJHJXMSL 		国家级获奖项目数量
+			SJHJXMSL 		省级获奖项目数量
+			SSJHJXMSL 				地市级获奖项目数量
+			XJHJXMSL			校级获奖项目数量
+		
+			
+			
+	3.1：专业学生人数信息表  qu_major_diagnosis_report_student	
+			
+			id bigint 主键自增
+			report_no	    报告编号  格式：学年学期专业编号
+			grade_name` varchar(32) 年级名称
+			male_num  int  男生数量
+			female_num int 女生数量
+			create_time datetime 创建时间
+	
+	3.2	专业自我诊断信息  qu_major_diagnosis_report_quality
+	    
+			id bigint 主键自增
+			quality_name 质控点名称
+			diagnosis_result  诊断结果
+			diagnosis_reason  原因分析 text(默认为空)
+			diagnosis_function 改进措施 text(默认为空)
+			diagnosis_effect	改进成效 text(默认为空)
+			create_time datetime 创建时间
+	
+课程自诊报告记录表 qu_course_diagnosis_report_record 添加报告记录	
+		
+		
+		4：课程诊断报告信息表  qu_course_diagnosis_report	
+			id bigint 主键自增
+			report_no	    报告编号  格式：学年学期课程编号（关联 qu_course_diagnosis_report_record）
+			semester_year  varchar(64)  学年 格式： yyyy-yyyy
+			semester varchar(32) 学期 1 第一学期 2 第二学期
+			course_code  varchar(64)   课程编号
+			course_name  varchar(255)   课程名称
+			item_key        		数据项标识                         
+			item_value      		数据值
+			create_time datetime 创建时间
+			
+			
+			KCLX  						课程类型
+			SFXQHZKC   					是否校企合作课程：【是/否】
+			SFJPKC  					是否精品课程：【是/否】
+			KCZRS  						课程组人数
+			KCZZGZCJSRS					课程组正高职称教师人数
+			KCZFGZCJSRS					课程组副高职称教师人数
+			KCZZJZCJSRS					课程组中级职称教师人数
+			KCZCJZCJSRS					课程组初级职称教师人数
+			KKZYSL            			开课专业数量
+			KKBJSL             			开课班级数量
+			KCXXRS						课程学习人数
+			PJF							平均分
+			GKRS 						挂科人数
+			MANAGERNO    				课程负责人编号 【不能为空】
+			MANAGERNAME  				课程负责人姓名 【不能为空】
+			
+			
+4.1 课程团队信息表  qu_course_diagnosis_report_team	
+			id bigint 主键自增
+			report_no	    报告编号  格式：学年学期课程编号
+			teacher_no  varchar(64)   教师编号
+			teacher_name  varchar(255)   教师姓名
+		  job_title  职称
+			education` varchar(64) DEFAULT NULL COMMENT 学历
+			is_double_professionally  varchar(16) DEFAULT NULL COMMENT '是否为双师素质教师 ( YES 是  NO 否)
+			create_time datetime 创建时间
+
+4.2 课程成绩信息表  qu_course_diagnosis_report_score
+			
+			id bigint 主键自增
+			report_no	    报告编号  格式：学年学期课程编号
+			major_name` varchar(255) DEFAULT NULL COMMENT 专业名称',
+			class_name  varchar(255)   班级名称
+			course_nature` varchar(32) DEFAULT NULL COMMENT '课程性质 专业核心课 非核心课程'
+			course_hour int 课时
+			student_num int 学生人数
+			fail_num int 挂科学生数
+			avg_score float 平均分
+			create_time datetime 创建时间
+	
+	
+	4.3 课程自我诊断信息  qu_course_diagnosis_report_quality
+	
+			id bigint 主键自增
+			report_no	    报告编号  格式：学年学期课程编号
+			quality_name 质控点名称
+			diagnosis_result  诊断结果
+			diagnosis_reason  原因分析 text(默认为空)
+			diagnosis_function 改进措施 text(默认为空)
+			diagnosis_effect	改进成效 text(默认为空)
+			create_time datetime 创建时间
+			
+	
+
+
+
+
+质量报告
+
+
+报告记录表qu_quality_report_record添加记录
+
+
+1、教师层面质量报告  qu_teacher_quality_report
+
+		id bigint 主键自增
+		report_no  报告编号		 
+		semester_year  学年  格式：yyyy-yyyy
+		item_key        		数据项标识                         
+		item_value      		数据值
+		create_time datetime 创建时间
+		
+		   ZRJSSL   					专任教师数量
+		   ZGZCRS   					正高职称人数
+		   FGZCRS   					副高职称人数
+		   FGJYSZCZZRJSBL 		副高及以上职称占专任教师比例  副高及以上职称人数/专任教师数量*100% 
+		   JYYSYSXLDJSRS      具有研究生以上学历的教师人数
+		   YJSYSXLDJSRSZDZRJSBL 研究生以上学历的教师人数占到专任教师比例  具有研究生以上学历的教师人数/专任教师数量*100% 
+		   SSSZJSRS   双师素质教师人数
+		   SSSZJSRSZZRJSBL 双师素质教师人数占专任教师比例  双师素质教师人数/专任教师数量*100%  
+		   XWJZJSRS 校外兼职教师人数
+			 XWJZJSJYZGJZCRS  校外兼职教师具有正高级职称人数
+			 XWJZJSJYFGJZCRS  校外兼职教师具有副高职称人数
+			 XWJZJSRSFGJYSZCZXWJZJSBL   校外兼职教师人数副高及以上职称占校外兼职教师比例  副高及以上职称人数/校外兼职教师数量*100%  
+		   XWJZJSYJSYSXLJSRS 	校外兼职教师研究生以上学历的教师人数
+		   XWJZJSYJSYSXLJSRSZXWJZJSBL  校外兼职教师研究生以上学历教师占校外兼职教师比例【具有研究生以上学历的教师人数/专任教师数量*100%】
+			 
+			 JSCMGHZS			教师层面规划总数
+			 YWCGHSL 			已完成规划数量
+			 WWCGHSL      未完成规划数量
+			 GWCRWSL      共完成任务数量
+			 JSCMGHRSZS   教师层面规划任务总数			
+			 GHRWWCL      规划任务完成率  已完成教师层面规划任务总数/教师层面规划任务总数*100%
+			 
+			 JSCMZKDSL   教师层面质控点数量
+			 JSCMMBDCLCGBFZJSDZKDSL  教师层面目标达成率超过90%的质控点数量
+			 JSCMBZDCLCGBFZJSDZKDSL  教师层面标准达成率超过90%的质控点数量
+			 
+			  
+			  
+	1.1 教师整体规划完成情况 qu_teacher_quality_report_plan
+	
+	    id bigint 主键自增
+		report_no  报告编号		 
+		规划名称（总规划）
+		规划编号（总规划）
+		子规划名称（二级规划）
+		负责人
+		规划完成情况
+		任务完成情况    已完成数/总任务数	
+		create_time datetime 创建时间  
+
+	1.2教师体规划任务情况 qu_teacher_quality_report_plan_task
+    
+		id bigint 主键自增
+		report_no  报告编号		 
+		任务名称
+		责任部门
+		负责部门
+		任务完成情况  已完成  进行中  等  
+		create_time datetime 创建时间 
+		
+	1.3教师层面质控点信息 qu_teacher_quality_report_quality    没写
+	
+		id bigint 主键自增
+		report_no  报告编号		 
+		index_no   二级指标编号
+		index_name 二级指标名称
+		quality_name 质控点名称
+		标准达标率
+		目标达标率
+		质控点适用教师人数
+		原因分析（暂时为空）
+		改进措施（暂时为空）
+		改进成效（暂时为空）
+		create_time datetime 创建时间
+		
+		
+	2、课程层面质量报告  qu_course_quality_report
+
+		id bigint 主键自增
+		report_no  报告编号		 
+		semester_year  学年  格式：yyyy-yyyy
+		item_key        		数据项标识                         
+		item_value      		数据值
+		create_time datetime 创建时间	
+			
+			KSKCSL  		开设课程数量
+			LLLKCSL  		理论类课程数量
+		  LLLCCSLKSKCSLZB  占比(理论类课程数量/开设课程数量*100%) 
+			LLJSJLCSL     		理论+实践类课程数量
+	    LLJSJLCSLKCSLZB     占比(理论+实践类课程数量/开设课程数量*100%)
+	    SJKCSL  实践类课程数量
+			SJKCSLKCSLZB  占比（实践类课程数量/开设课程数量*100%）
+		  XQHZKFKCS 校企合作开发课程数
+		  
+		  GHZS   规划总数
+		  YWCGHSL 已完成规划数量
+		  WWCGHSL 未完成规划数量
+		  YWCRWSL 已完成任务数量
+		  GHRWZS  规划任务总数		  
+		  GHRWWCL  规划任务完成率（已完成课程层面规划任务总数/课程层面规划任务总数*100%）
+		  ZKDSL  质控点数量
+		  MBDCLCGBFZJSZKDSL  目标达成率超过90%的质控点数量
+	    BZDCLCGBFZJSZKDSL  标准达成率超过90%的质控点数量
+
+		
+
+2.1 课程整体规划完成情况 qu_course_quality_report_plan
+	
+	  id bigint 主键自增
+		report_no  报告编号		 
+		规划名称（总规划）
+		规划编号（总规划）
+		子规划名称（二级规划）
+		负责人
+		规划完成情况
+		任务完成情况    已完成数/总任务数	
+		create_time datetime 创建时间  
+
+	2.2课程体规划任务情况 qu_course_quality_report_plan_task
+    
+		id bigint 主键自增
+		report_no  报告编号		 
+		任务名称
+		责任部门
+		负责部门
+		任务完成情况  已完成  进行中  等  
+		create_time datetime 创建时间 
+		
+	2.3课程层面质控点信息 qu_course_quality_report_quality
+	
+		id bigint 主键自增
+		report_no  报告编号		 
+		index_no   二级指标编号
+		index_name 二级指标名称
+		quality_name 质控点名称
+		标准达标率
+		目标达标率
+		质控点适用教师人数
+		原因分析（暂时为空）
+		改进措施（暂时为空）
+		改进成效（暂时为空）
+		create_time datetime 创建时间
+
+3、学生层面质量报告  qu_student_quality_report
+
+		id bigint 主键自增
+		report_no  报告编号		 
+		semester_year  学年  格式：yyyy-yyyy
+		item_key        		数据项标识                         
+		item_value      		数据值
+		create_time datetime 创建时间	
+
+   		ZXSZRS  在校生总人数
+   		NSZS  男生总数
+   		NVSZS  女生总数
+   		NNSBL  男女比  男生总数：女生总数（取整数比）两边取整  例如：8:3
+			ZZFDYSL		 专职辅导员数量
+			JZFDYSL    兼职辅导员数量
+			FDYSSB     辅导员生师比  在校学生总数：辅导员总数
+			YJSYSXLZB  研究生以上学历占(研究生以上学历/辅导员总数*100%)
+			GHZS  规划总数
+			YWCGHZS  已完成规划数量
+			WWCGHSL  未完成规划数量
+			YWCRWSL  已完成任务数量
+			GHHRWZS  规划任务总数
+			YWCGHRWZS  已完成规划任务总数
+			GHRWWCL    规划任务完成率（已完成学生层面规划任务总数/学生层面规划任务总数*100%）  			
+			ZKDSL      层面质控点数量
+			MBDCLCGBFZJSZKDSL  目标达成率超过90%的质控点数量
+	    BZDCLCGBFZJSZKDSL  标准达成率超过90%的质控点数量
+			
+3.1 学生整体规划完成情况 qu_student_quality_report_plan
+	
+	  id bigint 主键自增
+		report_no  报告编号		 
+		规划名称（总规划）
+		规划编号（总规划）
+		子规划名称（二级规划）
+		负责人
+		规划完成情况
+		任务完成情况    已完成数/总任务数	
+		create_time datetime 创建时间  
+
+	2.2学生体规划任务情况 qu_student_quality_report_plan_task
+    
+		id bigint 主键自增
+		report_no  报告编号		 
+		任务名称
+		责任部门
+		负责部门
+		任务完成情况  已完成  进行中  等  
+		create_time datetime 创建时间 
+		
+	3.3学生层面质控点信息 qu_student_quality_report_quality
+	
+		id bigint 主键自增
+		report_no  报告编号		 
+		index_no   二级指标编号
+		index_name 二级指标名称
+		quality_name 质控点名称
+		标准达标率
+		目标达标率
+		质控点适用教师人数
+		原因分析（暂时为空）
+		改进措施（暂时为空）
+		改进成效（暂时为空）
+		create_time datetime 创建时间
+
+
+
+
+4、学院层面质量报告  qu_college_student_quality_report
+                     修改后：qu_college_quality_report
+		id bigint 主键自增
+		report_no  报告编号		 
+		semester_year  学年  格式：yyyy-yyyy
+		item_key        		数据项标识                         
+		item_value      		数据值
+		create_time datetime 创建时间	
+
+   		ZXSZRS  在校生总人数
+   		JZGRS 教职工人数
+   		SSB  生师比 （学生人数：教职工人数） 生师比状况 如果生师比大于200:1，则写“生师比略低于国家标准，需招聘引进一些教职工。”，否则写“生师比情况良好”，
+   		FDYRS  辅导员人数
+   		FDYSSB  辅导员生师比(学生人数：辅导员人数)   如果生师比大于200:1，则写“辅导员生师比略低于国家标准，需招聘引进一些辅导员。”，否则写“辅导员生师比情况良好”
+   		ZRJSSL  专任教师数量
+   		ZRJSZGJZCRS  专任教师正高级职称人数
+   		ZRJSFGJZCRS  专任教师副高职称人数
+   		ZRJSFGJYSZB  专任教师副高及以上职称人数/专任教师数量*100%
+   		ZRJSYJSXLYSRS         专任教师具有研究生以上学历的教师人数
+   		ZRJSYJSXLYSRSZB  专任教师具有研究生以上学历的教师人数占到专任教师的(具有研究生以上学历的教师人数/专任教师数量*100%)
+   		SSSZJS        双师素质教师
+   		SSSZJSZB   双师素质教师占到专任教师(双师素质教师人数/专任教师数量*100%) 		
+   		ZSZYSL     招生专业数量
+   		SNZZYSL    三年制专业数量
+   		SYZYDLMC   所有专业大类名称  用、分开
+   		DLSL       大类数量
+   	  EJXYMC    二级学院名称 用、分开
+   	  EJXYSL    二级学院数量
+   		
+   		KSKCSL  		开设课程数量
+			LLLKCSL  		理论类课程数量
+		  LLLCCSLKSKCSLZB  占比(理论类课程数量/开设课程数量*100%) 
+			LLJSJLCSL     		理论+实践类课程数量
+	    LLJSJLCSLKCSLZB     占比(理论+实践类课程数量/开设课程数量*100%)
+	    SJKCSL  实践类课程数量
+			SJKCSLKCSLZB  占比（实践类课程数量/开设课程数量*100%）
+		  XQHZKFKCS 校企合作开发课程数
+   		
+   		
+			GHZS  规划总数
+			YWCGHZS  已完成规划数量
+			WWCGHSL  未完成规划数量
+			YWCRWSL  已完成任务数量
+			GHHRWZS  规划任务总数
+			
+			CLXYCMWQTCMGHZS  除了学院层面外其他层面规划总数  专业、课程、教师、学生层面规划之和
+			CLXYCMWQTCMGHZSYEC   除了学院层面外其他层面规划已完成(专业、课程、教师、学生层面规划之和)
+			CLXYCMWQTCMGHZSWWC    除了学院层面外其他层面规划未完成(专业、课程、教师、学生层面规划之和)
+			
+			WGCMZKDSL      五个层面质控点数量
+			XYZKDSL				 学院层面质控点
+			DBZKD          五个层面达标质控点
+			CLXYCMWQTCMZKDZS   除了学院层面外其他层面质控点总数  专业、课程、教师、学生层面规划之和
+			
+			RWZS     所有任务总数
+			RWWCQK   所有任务完成数量
+			RWWCL    任务完成率   所有任务完成数量/所有任务完成数量*100
+
+			
+4.1 学院层面规划完成情况 qu_college_quality_report_plan
+	
+	  id bigint 主键自增
+		report_no  报告编号		 
+		规划名称（总规划）
+		规划编号（总规划）
+		子规划名称（二级规划）
+		负责人
+		规划完成情况
+		任务完成情况    已完成数/总任务数	
+		create_time datetime 创建时间  
+
+	4.2学院所有任务情况 qu_college_quality_report_plan_task
+    
+		id bigint 主键自增
+		report_no  报告编号		 
+		task_type 任务类型
+		task_num  数量
+		task_rate  完成率 
+		create_time datetime 创建时间 
+		
+	4.3学院层面质控点信息 qu_college_quality_report_quality
+	
+		id bigint 主键自增
+		report_no  报告编号		 
+		index_no   二级指标编号
+		index_name 二级指标名称
+		quality_name 质控点名称
+		标准达标率
+		目标达标率
+		质控点适用教师人数
+		原因分析（暂时为空）
+		改进措施（暂时为空）
+		改进成效（暂时为空）
+		create_time datetime 创建时间
+
+
+	数据库里面的表结构是这个：
+		CREATE TABLE `qu_college_quality_report_quality` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键自增',
+  `report_no` varchar(64) DEFAULT NULL COMMENT '报告编号',
+  `index_no` varchar(64) DEFAULT NULL COMMENT '二级指标编号',
+  `index_name` varchar(255) DEFAULT NULL COMMENT '二级指标名称',
+  `quality_name` varchar(255) DEFAULT NULL COMMENT '质控点名称',
+  `standard_val` varchar(255) DEFAULT NULL COMMENT '标准达标率',
+  `target_val` varchar(255) DEFAULT NULL COMMENT '目标达标率',
+  `current_val` varchar(255) DEFAULT NULL COMMENT '当前值比率',
+  `is_standard` varchar(64) DEFAULT NULL COMMENT '是否达标(达标 未达标) 和标准值比较 ',
+  `quality_reason` text COMMENT '原因分析',
+  `quality_action` text COMMENT '改进措施',
+  `quality_effect` text COMMENT '改进成效',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='学院层面质控点信息';
+		
+		
+		
+ 5、专业层面质量报告  qu_major_quality_report
+
+		id bigint 主键自增
+		report_no  报告编号		 
+		semester_year  学年  格式：yyyy-yyyy
+		item_key        		数据项标识                         
+		item_value      		数据值
+		create_time datetime 创建时间	
+
+   		ZSZYS  招生专业数量
+   		YXMC      院系名称  用、分隔  举两个例子即可
+   		YXSL      院系数量
+   		ZYDLMC    专业大类名称  用、分隔  举两个例子即可
+			ZYDLSL     大类数量
+			XDXTZSDZYSL    现代学徒制试点专业数量
+			GJJZDZYSL      国家级重点专业数量
+			SJZDZYSL   省级重点专业数量
+			DIJZDZYSL   地市级重点专业数量    无
+			XJZDZYSL   校级重点专业数量
+			GJJTSZYSL   国家级特色专业数量
+			SJTSZYSL  省级特色专业数量
+			DIJTSZYSL  地市级特色专业数量   无
+			XJTSZYSL   校级特色专业数量
+			
+		  GHZS	规划总数（专业层面的）
+		  WCGHSL  完成规划数量（专业层面的）
+		  WWCGHSL  未完成规划数量（专业层面的）
+		  YWCRWSL  已完成任务数量（专业层面的）
+		  
+		  
+		  GHHRWZS  规划任务总数
+			YWCGHRWZS  已完成规划任务总数
+			GHRWWCL    规划任务完成率（已完成学生层面规划任务总数/学生层面规划任务总数*100%）  			
+			ZKDSL      层面质控点数量
+			MBDCLCGBFZJSZKDSL  目标达成率超过90%的质控点数量
+	    BZDCLCGBFZJSZKDSL  标准达成率超过90%的质控点数量
+		  
+		
+5.1 专业整体规划完成情况 qu_major_quality_report_plan
+	
+	  id bigint 主键自增
+		report_no  报告编号		 
+		规划名称（总规划）
+		规划编号（总规划）
+		子规划名称（二级规划）
+		负责人
+		规划完成情况
+		任务完成情况    已完成数/总任务数	
+		create_time datetime 创建时间  
+
+	5.2专业体规划任务情况 qu_major_quality_report_plan_task
+    
+		id bigint 主键自增
+		report_no  报告编号		 
+		任务名称
+		责任部门
+		负责部门
+		任务完成情况  已完成  进行中  等  
+		create_time datetime 创建时间 
+		
+	5.3专业层面质控点信息 qu_major_quality_report_quality
+	
+		id bigint 主键自增
+		report_no  报告编号		 
+		index_no   二级指标编号
+		index_name 二级指标名称
+		quality_name 质控点名称
+		标准达标率
+		目标达标率
+		质控点适用教师人数
+		原因分析（暂时为空）
+		改进措施（暂时为空）
+		改进成效（暂时为空）
+		create_time datetime 创建时间
